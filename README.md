@@ -31,6 +31,14 @@ const MyModule = () => {
 }
 ```
 
+## Example
+
+See an example on how to use this module in [`examples`](//github.com/ClaimR/react-native-client/tree/master/example).  You can start the example app by running:
+
+```bash
+yarn example android
+```
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
@@ -38,3 +46,4 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 MIT
+
