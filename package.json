@@ -41,6 +41,11 @@
     "url": "https://github.com/ClaimR/react-native-claimr-client/issues"
   },
   "homepage": "https://github.com/ClaimR/react-native-claimr-client#readme",
+  "dependencies": {
+    "@apollo/client": "^3.0.0-rc.6",
+    "@xstate/react": "^0.8.1",
+    "xstate": "^4.10.0"
+  },
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@react-native-community/bob": "^0.15.2",
@@ -110,26 +115,31 @@
       "prettier/prettier": [
         "error",
         {
-          "quoteProps": "consistent",
+          "semi": false,
           "singleQuote": true,
-          "tabWidth": 2,
           "trailingComma": "es5",
-          "useTabs": false
+          "printWidth": 110
         }
       ]
     }
   },
-  "eslintIgnore": ["node_modules/", "lib/"],
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
   "prettier": {
-    "quoteProps": "consistent",
+    "semi": false,
     "singleQuote": true,
-    "tabWidth": 2,
     "trailingComma": "es5",
-    "useTabs": false
+    "printWidth": 110
   },
   "@react-native-community/bob": {
     "source": "src",
     "output": "lib",
-    "targets": ["commonjs", "module", "typescript"]
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
   }
 }

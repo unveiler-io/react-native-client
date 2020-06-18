@@ -1,4 +1,4 @@
-package com.claimrreactnativeclient
+package tools.claimr.reactnativeclient
 
 import java.util.Arrays
 import java.util.Collections
