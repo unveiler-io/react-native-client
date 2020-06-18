@@ -11,8 +11,6 @@
     "src",
     "lib",
     "android",
-    "ios",
-    "cpp",
     "claimr-react-native-client.podspec",
     "!lib/typescript/example",
     "!**/__tests__",
@@ -32,7 +30,6 @@
   },
   "keywords": [
     "react-native",
-    "ios",
     "android"
   ],
   "repository": "https://github.com/ClaimR/react-native-client",
