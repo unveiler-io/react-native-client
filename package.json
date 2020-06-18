@@ -37,6 +37,7 @@
   "repository": "https://github.com/ClaimR/react-native-client",
   "author": "Adriaan Knapen <hi@aknapen.nl> (https://claimr.tools)",
   "license": "MIT",
+  "private": false,
   "bugs": {
     "url": "https://github.com/ClaimR/react-native-client/issues"
   },
