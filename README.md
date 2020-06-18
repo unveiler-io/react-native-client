@@ -1,21 +1,34 @@
 # @claimr/react-native-client
 
-React Native client to integrate with the ClaimR API.
+A React Native module to verify a users' location using the ClaimR API.
 
 ## Installation
+
+Using NPM:
 
 ```sh
 npm install @claimr/react-native-client
 ```
 
+Or Yarn:
+
+```bash
+yarn add @claimr/react-native-client
+```
+
 ## Usage
 
 ```js
-import ReactNativeClient from "@claimr/react-native-client";
+import { useLazyVerifiedLocation } from '@claimr/react-native-client'
 
-// ...
-
-const result = await ReactNativeClient.multiply(3, 7);
+const MyModule = () => {
+  const { claim, jwt, submit } = useLazyVerifiedLocation()
+  
+  return <>
+    { submit && <Button onPress={submit} title={"Submit"} /> }
+    { claim && <Text>{ claim.location.latitude }, { claim.location.longitude }</Text>}
+  </>
+}
 ```
 
 ## Contributing
