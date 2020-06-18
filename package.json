@@ -34,13 +34,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/ClaimR/react-native-claimr-client",
+  "repository": "https://github.com/ClaimR/react-native-client",
   "author": "Adriaan Knapen <hi@aknapen.nl> (https://claimr.tools)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ClaimR/react-native-claimr-client/issues"
+    "url": "https://github.com/ClaimR/react-native-client/issues"
   },
-  "homepage": "https://github.com/ClaimR/react-native-claimr-client#readme",
+  "homepage": "https://github.com/ClaimR/react-native-client#README",
   "dependencies": {
     "@apollo/client": "^3.0.0-rc.6",
     "@xstate/react": "^0.8.1",
