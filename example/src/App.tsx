@@ -21,7 +21,7 @@ const VerifiedLocationTokenAsText = ({ claim, jwt }: { claim: PointClaim; jwt: s
   </>
 )
 
-export default function App() {
+const App = () => {
   const { state, claim, jwt, message, submit } = useLazyVerifiedLocation()
 
   const SendButton = () => {
@@ -73,3 +73,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 })
+
+export default App
