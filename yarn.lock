@@ -7602,10 +7602,10 @@ plugin-error@^0.1.2:
     arr-union "^2.0.1"
     extend-shallow "^1.1.2"
 
-pod-install@^0.1.0:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/pod-install/-/pod-install-0.1.7.tgz#504f08b91bbba754d13a70439b2a447a3e4dcf58"
-  integrity sha512-lXclpGIgDPMe7yFh0FEvEhUpIturNE7W//V+7bl2Z0x7m4QtaYLcuoJnbCV6duGbrlgBSEk53SMKMeE9Ba8tVw==
+pod-install@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/pod-install/-/pod-install-0.1.8.tgz#0752d3be6f98af63e326ed867c18bea48d49f4f2"
+  integrity sha512-lXnsiyUMHoPiNQKVcGMCRIEH+oC9UMHKeFThbBdtJeaKUi2LRSjvPVMi4aF9/HrIpHcl2v2GmkvGxo1omxkORQ==
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
