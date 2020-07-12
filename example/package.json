@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "start": "react-native start"
+    "start": "react-native start",
+    "build:debug": "react-native bundle --platform android --dev true --entry-file index.tsx --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug && cd ..",
+    "build:release": "react-native bundle --platform android --dev false --entry-file index.tsx --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && rm -rf android/app/src/main/res/drawable-* && rm -rf android/app/src/main/res/raw/* && cd android && ./gradlew assembleRelease && cd .."
   },
   "dependencies": {
     "react": "16.11.0",

@@ -1,10 +1,16 @@
 import * as React from 'react'
 import { StyleSheet, View, Text, Button } from 'react-native'
+import Config from 'react-native-config'
 
 import { UnreachableCaseError } from 'ts-essentials'
 
-import { useLazyVerifiedLocation, PointClaim } from '@claimr/react-native-client'
+import { useLazyVerifiedLocation, ClaimrClient, PointClaim } from '@claimr/react-native-client'
 
+// Create our ClaimR Client
+const apiKey = Config.CLAIMR_API_KEY
+const client = new ClaimrClient({ apiKey })
+
+// Render tokens received from the ClaimR API
 const VerifiedLocationTokenAsText = ({ claim, jwt }: { claim: PointClaim; jwt: string }) => (
   <>
     <Text style={styles.header}>Verified Location Token Granted</Text>
@@ -21,9 +27,12 @@ const VerifiedLocationTokenAsText = ({ claim, jwt }: { claim: PointClaim; jwt: s
   </>
 )
 
+// Create our app
 const App = () => {
-  const { state, claim, jwt, message, submit } = useLazyVerifiedLocation()
+  // Register the lazy location verification hook.
+  const { state, claim, jwt, message, submit } = useLazyVerifiedLocation({ client })
 
+  // Define how our send button looks depending on the verified location state
   const SendButton = () => {
     if (state === 'submitting') {
       return (
@@ -43,6 +52,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
+      <Text>API Key: {apiKey.length > 20 ? apiKey.substr(0, 20) + '...' : apiKey}</Text>
       <SendButton />
       {claim && jwt && state === 'success' && <VerifiedLocationTokenAsText claim={claim} jwt={jwt} />}
       {state === 'failed' && <Text style={styles.header}>Location Verification Failed</Text>}

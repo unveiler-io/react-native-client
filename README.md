@@ -19,21 +19,41 @@ yarn add @claimr/react-native-client
 ## Usage
 
 ```js
-import { useLazyVerifiedLocation } from '@claimr/react-native-client'
+import { ClaimrClient, useLazyVerifiedLocation } from '@claimr/react-native-client'
+
+const client = new ClaimrClient({ apiKey: 'YOUR_API_KEY' })
 
 const MyModule = () => {
-  const { claim, jwt, submit } = useLazyVerifiedLocation()
-  
-  return <>
-    { submit && <Button onPress={submit} title={"Submit"} /> }
-    { claim && <Text>{ claim.location.latitude }, { claim.location.longitude }</Text>}
-  </>
+  const { claim, jwt, submit } = useLazyVerifiedLocation({ client })
+
+  return (
+    <>
+      {submit && <Button onPress={submit} title={'Submit'} />}
+      {claim && (
+        <Text>
+          {claim.location.latitude}, {claim.location.longitude}
+        </Text>
+      )}
+    </>
+  )
 }
 ```
 
 ## Example
 
-See an example on how to use this module in [`examples`](//github.com/ClaimR/react-native-client/tree/master/example).  You can start the example app by running:
+See an example on how to use this module in [`examples`](//github.com/ClaimR/react-native-client/tree/master/example).
+
+To run it, first create a `.env` file in the `example` folder where you add your ClaimR API Key. You can get a key at https://dashboard.claimr.tools.
+
+```bash
+# Copy the template
+cp example/.env.template example/.env
+
+# Open the .env file using your favorite editor
+vim example/.env
+```
+
+Then you can start the example app by running:
 
 ```bash
 yarn example android
@@ -46,4 +66,3 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 MIT
-
