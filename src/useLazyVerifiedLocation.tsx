@@ -1,16 +1,10 @@
-import { ApolloClient, HttpLink, InMemoryCache, gql, useLazyQuery } from '@apollo/client'
+import { gql, useLazyQuery } from '@apollo/client'
 
 import { useMachine } from '@xstate/react'
 import { Machine } from 'xstate'
 
-import useRawGnssMeasurements, { RawMeasurementsHeader } from './useRawGnssMeasurements'
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({
-    uri: 'https://api.claimr.tools/graphql',
-  }),
-})
+import { useRawGnssMeasurements, RawMeasurementsHeader } from './useRawGnssMeasurements'
+import type { ClaimrClient } from './ClaimrClient'
 
 const GET_VERIFIED_LOCATION = gql`
   query VerifyLocation($pointClaim: PointInput!, $context: ContextInput!) {
@@ -94,15 +88,46 @@ const verifiedLocationMachine = Machine(verifiedLocationMachineConfiguration)
 
 export type States = keyof typeof verifiedLocationMachineConfiguration.states
 
-export const useLazyVerifiedLocation: () => {
+type LazyVerifiedLocationOptions = {
+  client: ClaimrClient
+}
+
+export const useLazyVerifiedLocation: ({
+  client,
+}: LazyVerifiedLocationOptions) => {
   state: States
   claim?: PointClaim
   jwt?: string
   message?: string
   submit?: () => void
-} = () => {
+} = ({ client }) => {
   // Listen for RAW GNSS measurements
   const { ready, isListening, rawMeasurements, location } = useRawGnssMeasurements()
+
+  // Prepare the query against the ClaimR API
+  const [getVerifiedLocation, { data, error }] = useLazyQuery<VerifiedLocationResponse>(
+    GET_VERIFIED_LOCATION,
+    {
+      client: client.apolloClient,
+      onCompleted: ({ verifyLocation }) => {
+        console.log('completed')
+        const { status } = verifyLocation
+        if (status === 'GRANTED') {
+          send('GRANTED')
+        } else if (status === 'REVOKED') {
+          send('REVOKED')
+        } else {
+          send('FAILED')
+        }
+      },
+      onError: (err) => {
+        console.log('error')
+        console.error(err)
+        send('FAILED')
+      },
+      errorPolicy: 'all',
+    }
+  )
 
   // Track the state in a finite state machine
   const [state, send] = useMachine(verifiedLocationMachine, {
@@ -118,27 +143,6 @@ export const useLazyVerifiedLocation: () => {
       },
     },
   })
-
-  // Prepare the query against the ClaimR API
-  const [getVerifiedLocation, { data, error }] = useLazyQuery<VerifiedLocationResponse>(
-    GET_VERIFIED_LOCATION,
-    {
-      client,
-      onCompleted: ({ verifyLocation: { status } }) => {
-        if (status === 'GRANTED') {
-          send('GRANTED')
-        } else if (status === 'REVOKED') {
-          send('REVOKED')
-        } else {
-          send('FAILED')
-        }
-      },
-      onError: (err) => {
-        console.error(err)
-        send('FAILED')
-      },
-    }
-  )
 
   // Detect if the listener is successfully attached
   if (state.matches('registeringListener') && isListening) {

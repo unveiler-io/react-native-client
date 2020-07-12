@@ -12,7 +12,7 @@ const GnssLoggerEventEmitter = new NativeEventEmitter(GnssLogger)
 
 export const RawMeasurementsHeader = GnssLogger.RAW_GNSS_FILE_HEADER
 
-const useRawGnssMeasurements = ({ bufferSize = 150 }: { bufferSize?: number } = {}) => {
+export const useRawGnssMeasurements = ({ bufferSize = 150 }: { bufferSize?: number } = {}) => {
   const [error, setError] = useState<string>('No errors seen yet')
   const [isListening, setIsListening] = useState<boolean>(false)
   const [rawMeasurements, setRawMeasurements] = useState<string[]>([])
@@ -55,5 +55,3 @@ const useRawGnssMeasurements = ({ bufferSize = 150 }: { bufferSize?: number } = 
     ready: rawMeasurements.length >= bufferSize,
   }
 }
-
-export default useRawGnssMeasurements
