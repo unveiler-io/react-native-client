@@ -39,6 +39,8 @@ const MyModule = () => {
 }
 ```
 
+API documentation can be found [here](https://docs.claimr.tools/docs/react-native/api).
+
 ## Example
 
 See an example on how to use this module in [`examples`](//github.com/ClaimR/react-native-client/tree/master/example).
