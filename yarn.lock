@@ -7629,10 +7629,10 @@ plugin-error@^0.1.2:
     arr-union "^2.0.1"
     extend-shallow "^1.1.2"
 
-pod-install@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/pod-install/-/pod-install-0.1.9.tgz#c78c4e597072a014297d9185b820339ab3154768"
-  integrity sha512-NBbJfeVjtGw/1ro6QJYv2aN5XuHTCzLDNlD4EWXMcG9d4hOIB7L1Ie3+ScDmZpENih9SyHO98S8h7Ismk4vxUg==
+pod-install@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/pod-install/-/pod-install-0.1.10.tgz#e49eb1ec53e60a23d84fbfa3ae1bad7c834c987a"
+  integrity sha512-AwT6I0T2ISYydcsjQXzbLt6pRG7QgnVbXmnQl63Dxa+XE3T8WVahODFE9Riz7td9Et1CBAamTb1Nu0ILJvi9uA==
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
