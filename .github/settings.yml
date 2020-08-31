@@ -46,3 +46,5 @@ labels:
   - name: automerge
   - name: dependencies
     color: 283AFC
+  - name: improvement
+    color: FFCC66
