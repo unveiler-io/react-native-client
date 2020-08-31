@@ -60,7 +60,7 @@
     "husky": "^4.2.5",
     "jest": "^26.4.2",
     "pod-install": "^0.1.10",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.1",
     "react": "16.13.1",
     "react-native": "0.62.2",
     "release-it": "^13.7.0",
