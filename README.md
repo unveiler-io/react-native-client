@@ -18,8 +18,9 @@ yarn add @claimr/react-native-client
 
 ## Usage
 
-```js
+```jsx
 import { ClaimrClient, useLazyVerifiedLocation } from '@claimr/react-native-client'
+import { Text, Button } from 'react-native'
 
 const client = new ClaimrClient({ apiKey: 'YOUR_API_KEY' })
 
