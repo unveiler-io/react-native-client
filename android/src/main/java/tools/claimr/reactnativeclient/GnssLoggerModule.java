@@ -80,8 +80,6 @@ public class GnssLoggerModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void registerGnssMeasurementsCallback(Callback errorCallback, Callback successCallback) {
-        Log.e("GnssLogger", "Registering GNSS Measurements Callback");
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             errorCallback.invoke(String.format("Unsupported Android version %s, requires at least %s", Build.VERSION.SDK_INT, Build.VERSION_CODES.N));
         } else {
