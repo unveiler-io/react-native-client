@@ -1,6 +1,6 @@
 # @claimr/react-native-client
 
-A React Native module to verify a users' location using the ClaimR API.
+A React Native module to verify the location reported by your users using the ClaimR API.
 
 ## Installation
 
