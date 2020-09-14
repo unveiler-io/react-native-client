@@ -85,16 +85,16 @@ public class GnssLoggerModule extends ReactContextBaseJavaModule {
         } else {
             // Request permissions for accessing location details
             while (ActivityCompat.checkSelfPermission(reactContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Log.e("GnssLogger", "Requesting permissions");
+                Log.d("GnssLogger", "Requesting permissions");
                 requestLocationPermission();
             }
 
             // Register the location listener
-            Log.e("GnssLogger", "Registering Location Listener");
+            Log.i("GnssLogger", "Registering Location Listener");
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_RATE_GPS_MS, 0.0f, locationListener);
 
             // Register the GNSS measurements logger
-            Log.e("GnssLogger", "Registering GNSS Measurements Callback");
+            Log.i("GnssLogger", "Registering GNSS Measurements Callback");
             gnssCallback = new GnssMeasurementsEvent.Callback() {
                 @Override
                 public void onGnssMeasurementsReceived(GnssMeasurementsEvent event) {
