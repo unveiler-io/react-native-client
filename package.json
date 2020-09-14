@@ -47,7 +47,7 @@
     "xstate": "^4.12.0"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^8.3.4",
+    "@commitlint/config-conventional": "^9.1.2",
     "@react-native-community/bob": "^0.15.2",
     "@react-native-community/eslint-config": "^2.0.0",
     "@release-it/conventional-changelog": "^1.1.4",
