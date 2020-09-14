@@ -146,6 +146,7 @@ public class GnssLoggerModule extends ReactContextBaseJavaModule {
     }
 
     private void requestLocationPermission() {
+        Log.d("GnssLogger", "Requesting location access");
         Toast.makeText(getReactApplicationContext(), "Requesting location access", Toast.LENGTH_LONG).show();
 
         if (reactContext.getCurrentActivity() == null) {
