@@ -79,6 +79,15 @@ jobs:
           name: Build package
           command: |
             yarn prepare
+            
+  example-debug-build:
+    executor: default
+    steps:
+      - attach_project
+      - run:
+          name: Build example debug build
+          command: |
+            yarn example build:debug
 
 workflows:
   build-and-test:
@@ -94,5 +103,8 @@ workflows:
           requires:
             - install-dependencies
       - build-package:
+          requires:
+            - install-dependencies
+      - example-debug-build:
           requires:
             - install-dependencies
