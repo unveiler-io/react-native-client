@@ -87,7 +87,8 @@ jobs:
       - run:
           name: Build example debug build
           command: |
-            yarn example build:debug
+            cd example
+            yarn build:debug
 
 workflows:
   build-and-test:
