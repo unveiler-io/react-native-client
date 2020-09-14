@@ -116,3 +116,7 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/android,gradle
 
+android/app/src/main/assets/index.android.bundle
+android/app/src/main/res/raw/app.json
+android/app/src/main/res/drawable-mdpi/
+
