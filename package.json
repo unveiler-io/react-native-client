@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/ClaimR/react-native-client#README",
   "dependencies": {
-    "@apollo/client": "^3.1.5",
+    "@apollo/client": "^3.2.1",
     "@xstate/react": "^0.8.1",
     "graphql": "^15.3.0",
     "xstate": "^4.13.0"
