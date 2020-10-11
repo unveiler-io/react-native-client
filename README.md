@@ -1,6 +1,12 @@
-# @claimr/react-native-client
+<h2 align="center">@claimr/react-native-client</h2>
 
-A React Native module to verify the location reported by your users using the ClaimR API.
+<p align="center">
+  <a href="https://img.shields.io/npm/dt/@claimr/react-native-client?style=flat-square"><img src="https://img.shields.io/npm/dt/@claimr/react-native-client?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@claimr/react-native-client"><img src="https://img.shields.io/npm/v/@claimr/react-native-client?style=flat-square" /></a>
+  <a href="https://bundlephobia.com/result?p=@claimr/react-native-client"><img src="https://img.shields.io/bundlephobia/min/@claimr/react-native-client?style=flat-square" /></a>
+</p>
+
+<p align="center">A simple, developer friendly library to verify your user's location using the ClaimR verified location API.</p>
 
 ## Installation
 
