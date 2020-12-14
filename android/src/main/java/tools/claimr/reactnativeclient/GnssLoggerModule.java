@@ -77,13 +77,17 @@ public class GnssLoggerModule extends ReactContextBaseJavaModule {
         return constants;
     }
 
+    private boolean hasRequiredPermissions() {
+        return ActivityCompat.checkSelfPermission(reactContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
     @ReactMethod
     public void registerGnssMeasurementsCallback(Callback errorCallback, Callback successCallback) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             errorCallback.invoke(String.format("Unsupported Android version %s, requires at least %s", Build.VERSION.SDK_INT, Build.VERSION_CODES.N));
         } else {
             // Request permissions for accessing location details
-            while (ActivityCompat.checkSelfPermission(reactContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            while (!hasRequiredPermissions()) {
                 Log.d("GnssLogger", "Requesting permissions");
                 requestLocationPermission();
             }
