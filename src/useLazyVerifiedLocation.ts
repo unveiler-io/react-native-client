@@ -7,8 +7,8 @@ import { useRawGnssMeasurements, RawMeasurementsHeader } from './useRawGnssMeasu
 import type { ClaimrClient } from './ClaimrClient'
 
 const GET_VERIFIED_LOCATION = gql`
-  query VerifyLocation($pointClaim: PointInput!, $context: ContextInput!) {
-    verifyLocation(tokenRequest: { claim: { point: $pointClaim } }, context: $context) {
+  query VerifyLocation($claim: ClaimInput!, $context: ContextInput!) {
+    verifyLocation(tokenRequest: { claim: $claim }, context: $context) {
       status
       message
       tokenResponse {
@@ -91,7 +91,7 @@ export type States = keyof typeof verifiedLocationMachineConfiguration.states
 type LazyVerifiedLocationOptions = {
   client: ClaimrClient
   claim?: {
-    pointClaim: PointClaim
+    point: PointClaim
     // @todo: add area claim support, probably best to use
     // graphql-codegen to directly generate these types
   }
@@ -142,7 +142,7 @@ export const useLazyVerifiedLocation: ({
         console.debug('Submitting')
         getVerifiedLocation({
           variables: {
-            pointClaim: claim?.pointClaim ?? { location, radius: 100 },
+            claim: claim ?? { point: { location, radius: 100 } },
             context: { gnssLog: RawMeasurementsHeader + rawMeasurements },
           },
         })
