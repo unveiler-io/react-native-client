@@ -90,17 +90,23 @@ export type States = keyof typeof verifiedLocationMachineConfiguration.states
 
 type LazyVerifiedLocationOptions = {
   client: ClaimrClient
+  claim?: {
+    pointClaim: PointClaim
+    // @todo: add area claim support, probably best to use
+    // graphql-codegen to directly generate these types
+  }
 }
 
 export const useLazyVerifiedLocation: ({
   client,
+  claim,
 }: LazyVerifiedLocationOptions) => {
   state: States
   claim?: PointClaim
   jwt?: string
   message?: string
   submit?: () => void
-} = ({ client }) => {
+} = ({ client, claim }) => {
   // Listen for RAW GNSS measurements
   const { ready, isListening, rawMeasurements, location } = useRawGnssMeasurements()
 
@@ -136,7 +142,7 @@ export const useLazyVerifiedLocation: ({
         console.debug('Submitting')
         getVerifiedLocation({
           variables: {
-            pointClaim: { location, radius: 100 },
+            pointClaim: claim?.pointClaim ?? { location, radius: 100 },
             context: { gnssLog: RawMeasurementsHeader + rawMeasurements },
           },
         })
