@@ -11,7 +11,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -147,7 +146,6 @@ public class GnssLoggerModule extends ReactContextBaseJavaModule {
 
     private void requestLocationPermission() {
         Log.d("GnssLogger", "Requesting location access");
-        Toast.makeText(getReactApplicationContext(), "Requesting location access", Toast.LENGTH_LONG).show();
 
         if (reactContext.getCurrentActivity() == null) {
             Log.e("GnssLogger", "Activity is null");
