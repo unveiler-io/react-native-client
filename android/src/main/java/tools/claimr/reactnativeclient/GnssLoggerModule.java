@@ -87,9 +87,14 @@ public class GnssLoggerModule extends ReactContextBaseJavaModule {
             errorCallback.invoke(String.format("Unsupported Android version %s, requires at least %s", Build.VERSION.SDK_INT, Build.VERSION_CODES.N));
         } else {
             // Request permissions for accessing location details
-            while (!hasRequiredPermissions()) {
-                Log.d("GnssLogger", "Requesting permissions");
+             if (!hasRequiredPermissions()) {
                 requestLocationPermission();
+
+                // Check if we now do have all required permissions, if not throw an error.
+                if (!hasRequiredPermissions()) {
+                    errorCallback.invoke("Did not receive all required permissions");
+                    return;
+                }
             }
 
             // Register the location listener
