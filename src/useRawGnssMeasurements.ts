@@ -21,17 +21,16 @@ export const useRawGnssMeasurements = ({ bufferSize = 150 }: { bufferSize?: numb
   useEffect(() => {
     GnssLogger.registerGnssMeasurementsCallback(setError, () => setIsListening(true))
 
-    let recentMeasurementsBuffer: string[] = []
-
     const eventListeners = [
       GnssLoggerEventEmitter.addListener('rawGnssMeasurementLine', ({ message }) => {
-        // Add the new measurement
-        recentMeasurementsBuffer.push(message)
+        // Store our new measurement in the current state
+        setRawMeasurements((previousMeasurementsBuffer) => {
+          // Add the new measurement
+          const recentMeasurementsBuffer = [...previousMeasurementsBuffer, message]
 
-        // Cap the size of the buffer
-        recentMeasurementsBuffer = recentMeasurementsBuffer.slice(-bufferSize)
-
-        setRawMeasurements(recentMeasurementsBuffer)
+          // Cap the size of the buffer
+          return recentMeasurementsBuffer.slice(-bufferSize)
+        })
       }),
       GnssLoggerEventEmitter.addListener('locationChange', ({ message }) => {
         const [latitude, longitude] = message.split(',').map((v: string) => Number.parseFloat(v))
