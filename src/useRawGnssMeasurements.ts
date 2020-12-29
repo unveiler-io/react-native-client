@@ -22,11 +22,22 @@ export const useRawGnssMeasurements = ({ bufferSize = 150 }: { bufferSize?: numb
     GnssLogger.registerGnssMeasurementsCallback(setError, () => setIsListening(true))
 
     const eventListeners = [
-      GnssLoggerEventEmitter.addListener('rawGnssMeasurementLine', ({ message }) => {
+      GnssLoggerEventEmitter.addListener('rawGnssMeasurementLines', ({ message }) => {
+        // Validate input
+        if (typeof message !== 'string') {
+          console.error(
+            `Received unexpected message from native Android, expected string, found ${typeof message}`
+          )
+          return
+        }
+
+        // The message consists of one or more measurements, separated by line endings
+        const newLines = message.split('\n')
+
         // Store our new measurement in the current state
         setRawMeasurements((previousMeasurementsBuffer) => {
           // Add the new measurement
-          const recentMeasurementsBuffer = [...previousMeasurementsBuffer, message]
+          const recentMeasurementsBuffer = [...previousMeasurementsBuffer, ...newLines]
 
           // Cap the size of the buffer
           return recentMeasurementsBuffer.slice(-bufferSize)

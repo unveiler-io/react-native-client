@@ -27,6 +27,7 @@ import com.facebook.react.modules.core.RCTNativeAppEventEmitter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class GnssLoggerModule extends ReactContextBaseJavaModule {
     private static ReactApplicationContext reactContext;
@@ -107,9 +108,19 @@ public class GnssLoggerModule extends ReactContextBaseJavaModule {
                 @Override
                 public void onGnssMeasurementsReceived(GnssMeasurementsEvent event) {
                     GnssClock gnssClock = event.getClock();
-                    event.getMeasurements().forEach(gnssMeasurement -> {
-                        sendMessage("rawGnssMeasurementLine", GnssLoggerUtil.gnssMeasurementToFileLine(gnssClock, gnssMeasurement));
-                    });
+
+                    // Get all measurements as one large string
+                    String newRawGnssMeasurementLines = event.getMeasurements().stream()
+                      // Map each event into a line for a log file
+                      .map(gnssMeasurement -> GnssLoggerUtil.gnssMeasurementToFileLine(gnssClock, gnssMeasurement))
+                      // Concatenate all these lines
+                      .collect(Collectors.joining("\n"))
+                    ;
+
+                    // If we collected new measurements, then send the new measurements to React Native
+                    if (newRawGnssMeasurementLines.length() > 0) {
+                      sendMessage("rawGnssMeasurementLines", newRawGnssMeasurementLines);
+                    }
                 }
 
                 @Override
