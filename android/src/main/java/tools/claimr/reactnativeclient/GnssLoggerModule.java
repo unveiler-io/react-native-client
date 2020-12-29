@@ -108,7 +108,6 @@ public class GnssLoggerModule extends ReactContextBaseJavaModule {
                 public void onGnssMeasurementsReceived(GnssMeasurementsEvent event) {
                     GnssClock gnssClock = event.getClock();
                     event.getMeasurements().forEach(gnssMeasurement -> {
-                        sendMessage("gnssMeasurement", gnssMeasurement.toString());
                         sendMessage("rawGnssMeasurementLine", GnssLoggerUtil.gnssMeasurementToFileLine(gnssClock, gnssMeasurement));
                     });
                 }
