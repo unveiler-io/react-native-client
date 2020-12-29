@@ -129,7 +129,6 @@ export const useLazyVerifiedLocation = ({
         }
       },
       onError: (err) => {
-        console.log('error')
         console.error(err)
         send('FAILED')
       },
