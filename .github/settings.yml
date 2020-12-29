@@ -37,14 +37,20 @@ repository:
   # rebase-merging.
   allow_rebase_merge: true
 
-# Labels: define labels for Issues and Pull Requests
 labels:
   - name: bug
-    color: CC0000
+    color: 'CC0000'
   - name: feature
-    color: 336699
-  - name: automerge
-  - name: dependencies
-    color: 283AFC
+    color: '336699'
   - name: improvement
-    color: FFCC66
+    color: 'FFCC66'
+
+  - name: automerge
+
+  - name: dependencies
+    color: '283AFC'
+  - name: yarn
+    color: 'DC9750'
+  - name: Github Actions
+    color: '2C1E10'
+
