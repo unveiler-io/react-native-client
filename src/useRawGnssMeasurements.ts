@@ -12,11 +12,13 @@ const GnssLoggerEventEmitter = new NativeEventEmitter(GnssLogger)
 
 export const RawMeasurementsHeader = GnssLogger.RAW_GNSS_FILE_HEADER
 
-export const useRawGnssMeasurements = ({ bufferSize = 150 }: { bufferSize?: number } = {}) => {
+export const useRawGnssMeasurements = ({ maxEpochs = 10 }: { maxEpochs?: number } = {}) => {
   const [error, setError] = useState<string>()
   const [isListening, setIsListening] = useState<boolean>(false)
-  const [rawMeasurements, setRawMeasurements] = useState<string[]>([])
+  const [epochs, setEpochData] = useState<string[][]>([])
   const [location, setLocation] = useState<LatLon | undefined>()
+
+  const collectedEpochCount = epochs.length
 
   useEffect(() => {
     GnssLogger.registerGnssMeasurementsCallback(setError, () => setIsListening(true))
@@ -35,14 +37,16 @@ export const useRawGnssMeasurements = ({ bufferSize = 150 }: { bufferSize?: numb
         const newLines = message.split('\n')
 
         // Store our new measurement in the current state
-        setRawMeasurements((previousMeasurementsBuffer) => {
+        setEpochData((previousMeasurementsBuffer) => {
           // Add the new measurement
-          const recentMeasurementsBuffer = [...previousMeasurementsBuffer, ...newLines]
+          const recentMeasurementsBuffer = [...previousMeasurementsBuffer, newLines]
 
           // Cap the size of the buffer
-          return recentMeasurementsBuffer.slice(-bufferSize)
+          return recentMeasurementsBuffer.slice(-maxEpochs)
         })
       }),
+
+      // Register an event listener to track the location of the device
       GnssLoggerEventEmitter.addListener('locationChange', ({ message }) => {
         const [latitude, longitude] = message.split(',').map((v: string) => Number.parseFloat(v))
         setLocation({ latitude, longitude })
@@ -55,13 +59,13 @@ export const useRawGnssMeasurements = ({ bufferSize = 150 }: { bufferSize?: numb
       eventListeners.forEach((eventListener) => eventListener?.remove())
       setIsListening(false)
     }
-  }, [bufferSize])
+  }, [maxEpochs])
 
   return {
     error,
     isListening,
-    rawMeasurements: rawMeasurements.join('\n'),
+    rawMeasurements: epochs.reduce((a1, a2) => [...a1, ...a2], []).join('\n'),
     location,
-    ready: rawMeasurements.length >= bufferSize,
+    ready: collectedEpochCount >= maxEpochs,
   }
 }

@@ -95,13 +95,13 @@ type LazyVerifiedLocationOptions = {
     // @todo: add area claim support, probably best to use
     // graphql-codegen to directly generate these types
   }
-  bufferSize?: number
+  maxEpochs?: number
 }
 
 export const useLazyVerifiedLocation = ({
   client,
   claim,
-  bufferSize,
+  maxEpochs,
 }: LazyVerifiedLocationOptions): {
   state: States
   claim?: PointClaim
@@ -110,7 +110,7 @@ export const useLazyVerifiedLocation = ({
   submit?: () => void
 } => {
   // Listen for RAW GNSS measurements
-  const { ready, isListening, rawMeasurements, location } = useRawGnssMeasurements({ bufferSize })
+  const { ready, isListening, rawMeasurements, location } = useRawGnssMeasurements({ maxEpochs })
 
   // Prepare the query against the ClaimR API
   const [getVerifiedLocation, { data, error }] = useLazyQuery<VerifiedLocationResponse>(
