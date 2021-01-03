@@ -3,6 +3,10 @@ import { NativeEventEmitter } from 'react-native'
 
 import GnssLogger from './modules/GnssLogger'
 
+interface Epoch {
+  measurementsCount: number
+}
+
 interface LatLon {
   latitude: number
   longitude: number
@@ -14,13 +18,18 @@ interface UseRawGnssMeasurementsResult {
   rawMeasurements: string
   location?: LatLon
   ready: boolean
+  epochs: Epoch[]
 }
 
 const GnssLoggerEventEmitter = new NativeEventEmitter(GnssLogger)
 
 export const RawMeasurementsHeader = GnssLogger.RAW_GNSS_FILE_HEADER
 
-export const useRawGnssMeasurements = ({ maxEpochs = 10 }: { maxEpochs?: number } = {}): UseRawGnssMeasurementsResult => {
+export const useRawGnssMeasurements = ({
+  maxEpochs,
+}: {
+  maxEpochs: number
+}): UseRawGnssMeasurementsResult => {
   const [error, setError] = useState<string>()
   const [isListening, setIsListening] = useState<boolean>(false)
   const [epochs, setEpochData] = useState<string[][]>([])
@@ -73,6 +82,7 @@ export const useRawGnssMeasurements = ({ maxEpochs = 10 }: { maxEpochs?: number 
     error,
     isListening,
     rawMeasurements: epochs.reduce((a1, a2) => [...a1, ...a2], []).join('\n'),
+    epochs: epochs.map((epoch) => ({ measurementsCount: epoch.length })),
     location,
     ready: collectedEpochCount >= maxEpochs,
   }

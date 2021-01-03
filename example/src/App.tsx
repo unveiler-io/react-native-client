@@ -31,7 +31,7 @@ const VerifiedLocationTokenAsText = ({ claim, jwt }: { claim: PointClaim; jwt: s
 // Create our app
 const App = () => {
   // Register the lazy location verification hook.
-  const { state, claim, jwt, message, submit } = useLazyVerifiedLocation({ client })
+  const { state, claim, jwt, message, submit, progress } = useLazyVerifiedLocation({ client })
 
   // Define how our send button looks depending on the verified location state
   const SendButton = () => {
@@ -40,7 +40,10 @@ const App = () => {
         <Button title={'Verifying Location Based on GNSS Data'} disabled={true} onPress={console.error} />
       )
     } else if (state === 'listening') {
-      return <Button title={'Collecting GNSS Data'} disabled={true} onPress={console.error} />
+      const title = progress
+        ? `Collecting GNSS Data (${progress.current}/${progress.target})`
+        : 'Collecting GNSS Data'
+      return <Button title={title} disabled={true} onPress={console.error} />
     } else if (state === 'registeringListener') {
       return <Button title={'Registering GNSS Listener'} disabled={true} onPress={console.error} />
     } else if (state === 'ready' || state === 'success' || state === 'failed' || state === 'revoked') {

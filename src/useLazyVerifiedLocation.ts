@@ -101,16 +101,21 @@ type LazyVerifiedLocationOptions = {
 export const useLazyVerifiedLocation = ({
   client,
   claim,
-  maxEpochs,
+  maxEpochs = 10,
 }: LazyVerifiedLocationOptions): {
   state: States
   claim?: PointClaim
   jwt?: string
   message?: string
   submit?: () => void
+  // The amount of progress made in the current state
+  progress?: {
+    current: number
+    target: number
+  }
 } => {
   // Listen for RAW GNSS measurements
-  const { ready, isListening, rawMeasurements, location } = useRawGnssMeasurements({ maxEpochs })
+  const { ready, isListening, rawMeasurements, location, epochs } = useRawGnssMeasurements({ maxEpochs })
 
   // Prepare the query against the ClaimR API
   const [getVerifiedLocation, { data, error }] = useLazyQuery<VerifiedLocationResponse>(
@@ -172,5 +177,11 @@ export const useLazyVerifiedLocation = ({
     message: data?.verifyLocation?.message ?? error?.message,
     submit,
     state: state.value as States,
+    progress: state.matches('listening')
+      ? {
+          current: epochs.length,
+          target: maxEpochs,
+        }
+      : undefined,
   }
 }
