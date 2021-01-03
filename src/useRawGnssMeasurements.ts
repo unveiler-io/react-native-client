@@ -8,11 +8,19 @@ interface LatLon {
   longitude: number
 }
 
+interface UseRawGnssMeasurementsResult {
+  error?: string
+  isListening: boolean
+  rawMeasurements: string
+  location?: LatLon
+  ready: boolean
+}
+
 const GnssLoggerEventEmitter = new NativeEventEmitter(GnssLogger)
 
 export const RawMeasurementsHeader = GnssLogger.RAW_GNSS_FILE_HEADER
 
-export const useRawGnssMeasurements = ({ maxEpochs = 10 }: { maxEpochs?: number } = {}) => {
+export const useRawGnssMeasurements = ({ maxEpochs = 10 }: { maxEpochs?: number } = {}): UseRawGnssMeasurementsResult => {
   const [error, setError] = useState<string>()
   const [isListening, setIsListening] = useState<boolean>(false)
   const [epochs, setEpochData] = useState<string[][]>([])
