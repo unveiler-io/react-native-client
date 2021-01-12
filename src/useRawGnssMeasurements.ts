@@ -26,8 +26,10 @@ const GnssLoggerEventEmitter = new NativeEventEmitter(GnssLogger)
 export const RawMeasurementsHeader = GnssLogger.RAW_GNSS_FILE_HEADER
 
 export const useRawGnssMeasurements = ({
+  minEpochs,
   maxEpochs,
 }: {
+  minEpochs: number
   maxEpochs: number
 }): UseRawGnssMeasurementsResult => {
   const [error, setError] = useState<string>()
@@ -84,6 +86,6 @@ export const useRawGnssMeasurements = ({
     rawMeasurements: epochs.reduce((a1, a2) => [...a1, ...a2], []).join('\n'),
     epochs: epochs.map((epoch) => ({ measurementsCount: epoch.length })),
     location,
-    ready: collectedEpochCount >= maxEpochs,
+    ready: collectedEpochCount >= minEpochs,
   }
 }
