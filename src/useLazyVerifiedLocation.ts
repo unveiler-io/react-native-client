@@ -147,7 +147,6 @@ export const useLazyVerifiedLocation = ({
         send('FAILED')
       },
       errorPolicy: 'all',
-      fetchPolicy: 'network-only',
     }
   )
 
