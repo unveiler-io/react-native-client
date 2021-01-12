@@ -28,8 +28,7 @@ const VerifiedLocationTokenAsText = ({ claim, jwt }: { claim: PointClaim; jwt: s
   </>
 )
 
-// Create our app
-const App = () => {
+const VerifyLocation = () => {
   // Register the lazy location verification hook.
   const { state, claim, jwt, message, submit, progress } = useLazyVerifiedLocation({ client })
 
@@ -55,8 +54,7 @@ const App = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>API Key: {apiKey.length > 20 ? apiKey.substr(0, 20) + '...' : apiKey}</Text>
+    <>
       <SendButton />
       {claim && jwt && state === 'success' && <VerifiedLocationTokenAsText claim={claim} jwt={jwt} />}
       {state === 'failed' && <Text style={styles.header}>Location Verification Failed</Text>}
@@ -65,6 +63,15 @@ const App = () => {
           <Text style={styles.label}>Message</Text> {message}
         </Text>
       )}
+    </>
+  )
+}
+
+const App = () => {
+  return (
+    <View style={styles.container}>
+      <Text>API Key: {apiKey.length > 20 ? apiKey.substr(0, 20) + '...' : apiKey}</Text>
+      <VerifyLocation />
     </View>
   )
 }
