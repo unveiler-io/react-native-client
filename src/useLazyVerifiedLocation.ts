@@ -3,8 +3,9 @@ import { gql, useLazyQuery } from '@apollo/client'
 import { useMachine } from '@xstate/react'
 import { Machine } from 'xstate'
 
-import { useRawGnssMeasurements, RawMeasurementsHeader } from './useRawGnssMeasurements'
 import type { ClaimrClient } from './ClaimrClient'
+import { RawMeasurementsHeader } from './useRawGnssMeasurements'
+import { useVerifiedLocation } from './VerifiedLocationProvider'
 
 const GET_VERIFIED_LOCATION = gql`
   query VerifyLocation($claim: ClaimInput!, $context: ContextInput!) {
@@ -106,8 +107,8 @@ type LazyVerifiedLocationOptions = {
 export const useLazyVerifiedLocation = ({
   client,
   claim,
-  minEpochs = 4,
-  maxEpochs = 10,
+  minEpochs,
+  maxEpochs,
 }: LazyVerifiedLocationOptions): {
   state: States
   claim?: PointClaim
@@ -121,10 +122,8 @@ export const useLazyVerifiedLocation = ({
   }
 } => {
   // Listen for RAW GNSS measurements
-  const { ready, isListening, rawMeasurements, location, epochs } = useRawGnssMeasurements({
-    minEpochs,
-    maxEpochs,
-  })
+  const { RawGnssMeasurements } = useVerifiedLocation({ minEpochs, maxEpochs })
+  const { ready, isListening, rawMeasurements, location, progress } = RawGnssMeasurements
 
   // Prepare the query against the ClaimR API
   const [getVerifiedLocation, { data, error }] = useLazyQuery<VerifiedLocationResponse>(
@@ -185,11 +184,6 @@ export const useLazyVerifiedLocation = ({
     message: data?.verifyLocation?.message ?? error?.message,
     submit,
     state: state.value as States,
-    progress: state.matches('listening')
-      ? {
-          current: epochs.length,
-          target: minEpochs,
-        }
-      : undefined,
+    progress: state.matches('listening') ? progress : undefined,
   }
 }

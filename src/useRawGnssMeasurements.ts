@@ -12,13 +12,17 @@ interface LatLon {
   longitude: number
 }
 
-interface UseRawGnssMeasurementsResult {
+export interface UseRawGnssMeasurementsResult {
   error?: string
   isListening: boolean
   rawMeasurements: string
   location?: LatLon
   ready: boolean
   epochs: Epoch[]
+  progress?: {
+    current: number
+    target: number
+  }
 }
 
 const GnssLoggerEventEmitter = new NativeEventEmitter(GnssLogger)
@@ -26,12 +30,19 @@ const GnssLoggerEventEmitter = new NativeEventEmitter(GnssLogger)
 export const RawMeasurementsHeader = GnssLogger.RAW_GNSS_FILE_HEADER
 
 export const useRawGnssMeasurements = ({
-  minEpochs,
+  minEpochs = 4,
   maxEpochs,
+  active = true,
 }: {
-  minEpochs: number
-  maxEpochs: number
+  minEpochs?: number
+  maxEpochs?: number
+  active?: boolean
 }): UseRawGnssMeasurementsResult => {
+  // Compute the max amount of epochs to be collected,
+  // it should be atleast minEpochs, otherwise it inherits
+  // maxEpochs or if omited it's default on 10.
+  const adjustedMaxEpochs = Math.max(minEpochs, maxEpochs ?? 10)
+
   const [error, setError] = useState<string>()
   const [isListening, setIsListening] = useState<boolean>(false)
   const [epochs, setEpochData] = useState<string[][]>([])
@@ -40,6 +51,11 @@ export const useRawGnssMeasurements = ({
   const collectedEpochCount = epochs.length
 
   useEffect(() => {
+    // Do not register the hook while not active
+    if (!active) {
+      return
+    }
+
     GnssLogger.registerGnssMeasurementsCallback(setError, () => setIsListening(true))
 
     const eventListeners = [
@@ -61,7 +77,7 @@ export const useRawGnssMeasurements = ({
           const recentMeasurementsBuffer = [...previousMeasurementsBuffer, newLines]
 
           // Cap the size of the buffer
-          return recentMeasurementsBuffer.slice(-maxEpochs)
+          return recentMeasurementsBuffer.slice(-adjustedMaxEpochs)
         })
       }),
 
@@ -78,7 +94,7 @@ export const useRawGnssMeasurements = ({
       eventListeners.forEach((eventListener) => eventListener?.remove())
       setIsListening(false)
     }
-  }, [maxEpochs])
+  }, [active, adjustedMaxEpochs])
 
   return {
     error,
@@ -87,5 +103,9 @@ export const useRawGnssMeasurements = ({
     epochs: epochs.map((epoch) => ({ measurementsCount: epoch.length })),
     location,
     ready: collectedEpochCount >= minEpochs,
+    progress: {
+      current: collectedEpochCount,
+      target: minEpochs,
+    },
   }
 }
