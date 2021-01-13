@@ -4,6 +4,7 @@
   <a href="https://img.shields.io/npm/dt/@claimr/react-native-client?style=flat-square"><img src="https://img.shields.io/npm/dt/@claimr/react-native-client?style=flat-square" /></a>
   <a href="https://www.npmjs.com/package/@claimr/react-native-client"><img src="https://img.shields.io/npm/v/@claimr/react-native-client?style=flat-square" /></a>
   <a href="https://bundlephobia.com/result?p=@claimr/react-native-client"><img src="https://img.shields.io/bundlephobia/min/@claimr/react-native-client?style=flat-square" /></a>
+  <a href="https://lgtm.com/projects/g/ClaimR/react-native-client/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/ClaimR/react-native-client.svg?logo=lgtm&logoWidth=18&style=flat-square"/></a>
 </p>
 
 <p align="center">A simple, developer friendly library to verify your user's location using the ClaimR verified location API.</p>
