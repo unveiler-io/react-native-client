@@ -1,6 +1,7 @@
 package tools.claimr.reactnativeclient;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.GnssClock;
@@ -10,6 +11,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -82,6 +85,7 @@ public class GnssLoggerModule extends ReactContextBaseJavaModule {
         return ActivityCompat.checkSelfPermission(reactContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
+    @SuppressLint("MissingPermission")
     @ReactMethod
     public void registerGnssMeasurementsCallback(Callback errorCallback, Callback successCallback) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
@@ -127,7 +131,9 @@ public class GnssLoggerModule extends ReactContextBaseJavaModule {
                 public void onStatusChanged(int status) {
                 }
             };
-            locationManager.registerGnssMeasurementsCallback(gnssCallback);
+            
+            Handler callbackHandler = new Handler(Looper.myLooper());
+            locationManager.registerGnssMeasurementsCallback(gnssCallback, callbackHandler);
 
             // Notify our React Native application that we are now listening for GNSS and location updates.
             successCallback.invoke();
