@@ -25,7 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
         @Override
         protected List<ReactPackage> getPackages() {
           List<ReactPackage> packages = new PackageList(this).getPackages();
-          
+
           // Packages that cannot be autolinked yet can be added manually here, for ReactNativeClientExample:
           packages.add(new GnssLoggerPackage());
 
@@ -62,7 +62,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("tools.claimr.reactnativeclientExample.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.example.ReactNativeClientExample.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);
