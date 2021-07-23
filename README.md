@@ -1,35 +1,35 @@
-<h2 align="center">@claimr/react-native-client</h2>
+<h2 align="center">@unveiler.io/react-native-client</h2>
 
 <p align="center">
-  <a href="https://img.shields.io/npm/dt/@claimr/react-native-client?style=flat-square"><img src="https://img.shields.io/npm/dt/@claimr/react-native-client?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@claimr/react-native-client"><img src="https://img.shields.io/npm/v/@claimr/react-native-client?style=flat-square" /></a>
-  <a href="https://bundlephobia.com/result?p=@claimr/react-native-client"><img src="https://img.shields.io/bundlephobia/min/@claimr/react-native-client?style=flat-square" /></a>
+  <a href="https://img.shields.io/npm/dt/@unveiler.io/react-native-client?style=flat-square"><img src="https://img.shields.io/npm/dt/@unveiler.io/react-native-client?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@unveiler.io/react-native-client"><img src="https://img.shields.io/npm/v/@unveiler.io/react-native-client?style=flat-square" /></a>
+  <a href="https://bundlephobia.com/result?p=@unveiler.io/react-native-client"><img src="https://img.shields.io/bundlephobia/min/@unveiler.io/react-native-client?style=flat-square" /></a>
   <a href="https://lgtm.com/projects/g/ClaimR/react-native-client/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/ClaimR/react-native-client.svg?logo=lgtm&logoWidth=18&style=flat-square"/></a>
 </p>
 
-<p align="center">A simple, developer friendly library to verify your user's location using the ClaimR verified location API.</p>
+<p align="center">A simple, developer friendly library to verify your user's location using the Unveiler verified location API.</p>
 
 ## Installation
 
 Using NPM:
 
 ```sh
-npm install @claimr/react-native-client
+npm install @unveiler.io/react-native-client
 ```
 
 Or Yarn:
 
 ```bash
-yarn add @claimr/react-native-client
+yarn add @unveiler.io/react-native-client
 ```
 
 ## Usage
 
 ```jsx
-import { ClaimrClient, useLazyVerifiedLocation } from '@claimr/react-native-client'
+import { UnveilerClient, useLazyVerifiedLocation } from '@unveiler.io/react-native-client'
 import { Text, Button } from 'react-native'
 
-const client = new ClaimrClient({ apiKey: 'YOUR_API_KEY' })
+const client = new UnveilerClient({ apiKey: 'YOUR_API_KEY' })
 
 const MyModule = () => {
   const { claim, jwt, submit } = useLazyVerifiedLocation({ client })
@@ -47,13 +47,13 @@ const MyModule = () => {
 }
 ```
 
-API documentation can be found [here](https://docs.claimr.tools/docs/react-native/api).
+API documentation can be found [here](https://docs.unveiler.io/docs/react-native/api).
 
 ## Example
 
 See an example on how to use this module in [`examples`](//github.com/ClaimR/react-native-client/tree/master/example).
 
-To run it, first create a `.env` file in the `example` folder where you add your ClaimR API Key. You can get a key at https://dashboard.claimr.tools.
+To run it, first create a `.env` file in the `example` folder where you add your ClaimR API Key. You can get a key at https://dashboard.unveiler.io.
 
 ```bash
 # Copy the template

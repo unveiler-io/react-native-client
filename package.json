@@ -1,7 +1,7 @@
 {
   "name": "@unveiler.io/react-native-client",
   "version": "3.0.0-rc.0",
-  "description": "React Native client to integrate with the ClaimR API.",
+  "description": "React Native client to integrate with the Unveiler API.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
@@ -34,7 +34,7 @@
     "android"
   ],
   "repository": "https://github.com/ClaimR/react-native-client",
-  "author": "Adriaan Knapen <hi@aknapen.nl> (https://claimr.tools)",
+  "author": "Adriaan Knapen <hi@aknapen.nl> (https://unveiler.io)",
   "license": "MIT",
   "private": false,
   "bugs": {
