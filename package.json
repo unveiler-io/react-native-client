@@ -1,6 +1,6 @@
 {
   "name": "@unveiler.io/react-native-client",
-  "version": "2.2.0-beta.0",
+  "version": "3.0.0-rc.0",
   "description": "React Native client to integrate with the ClaimR API.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
