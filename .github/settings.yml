@@ -8,7 +8,7 @@ repository:
   description: React Native module to verify a users' location using the ClaimR API.
 
   # A URL with more information about the repository
-  homepage: https://developer.claimr.tools/docs/react-native/getting-started
+  homepage: https://developer.unveiler.io/docs/react-native/getting-started
 
   # Either `true` to make the repository private, or `false` to make it public.
   private: false
