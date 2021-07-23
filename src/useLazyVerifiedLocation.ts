@@ -3,7 +3,7 @@ import { gql, useLazyQuery } from '@apollo/client'
 import { useMachine } from '@xstate/react'
 import { Machine } from 'xstate'
 
-import type { ClaimrClient } from './ClaimrClient'
+import type { UnveilerClient } from './UnveilerClient'
 import { RawMeasurementsHeader } from './useRawGnssMeasurements'
 import { useVerifiedLocation } from './VerifiedLocationProvider'
 
@@ -90,7 +90,7 @@ const verifiedLocationMachine = Machine(verifiedLocationMachineConfiguration)
 export type States = keyof typeof verifiedLocationMachineConfiguration.states
 
 type LazyVerifiedLocationOptions = {
-  client: ClaimrClient
+  client: UnveilerClient
   claim?: {
     point: PointClaim
     // @todo: add area claim support, probably best to use

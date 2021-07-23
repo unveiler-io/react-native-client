@@ -5,11 +5,11 @@ import Config from 'react-native-config'
 
 import { UnreachableCaseError } from 'ts-essentials'
 
-import { useLazyVerifiedLocation, ClaimrClient, PointClaim } from '@claimr/react-native-client'
+import { useLazyVerifiedLocation, UnveilerClient, PointClaim } from '@unveiler.io/react-native-client'
 
 // Create our ClaimR Client
-const apiKey = Config.CLAIMR_API_KEY
-const client = new ClaimrClient({ apiKey })
+const apiKey = Config.UNVEILER_API_KEY
+const client = new UnveilerClient({ apiKey })
 
 // Render tokens received from the ClaimR API
 const VerifiedLocationTokenAsText = ({ claim, jwt }: { claim: PointClaim; jwt: string }) => (

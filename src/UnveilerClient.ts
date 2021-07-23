@@ -1,19 +1,17 @@
 import { ApolloClient, InMemoryCache, HttpLink, NormalizedCacheObject } from '@apollo/client'
 
-export type ClaimrClientOptions = {
+export type UnveilerClientOptions = {
   apiKey: string
 }
 
-export class ClaimrClient {
+export class UnveilerClient {
   public apolloClient: ApolloClient<NormalizedCacheObject>
 
-  constructor(options: ClaimrClientOptions) {
-    const { apiKey } = options
-
+  constructor({ apiKey }: UnveilerClientOptions) {
     this.apolloClient = new ApolloClient({
       cache: new InMemoryCache(),
       link: new HttpLink({
-        uri: 'https://api.claimr.tools/graphql',
+        uri: 'https://api.unveiler.io/graphql',
         headers: {
           Authorization: `Bearer ${apiKey}`,
         },

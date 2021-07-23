@@ -1,6 +1,6 @@
 {
-  "name": "@claimr/react-native-client-example",
-  "description": "Example app for @claimr/react-native-client",
+  "name": "@unveiler.io/react-native-client-example",
+  "description": "Example app for @unveiler.io/react-native-client",
   "version": "0.0.1",
   "private": true,
   "scripts": {

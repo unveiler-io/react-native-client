@@ -1,3 +1,3 @@
 export * from './useLazyVerifiedLocation'
-export * from './ClaimrClient'
+export * from './UnveilerClient'
 export * from './VerifiedLocationProvider'

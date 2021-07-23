@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@claimr/react-native-client": ["./src/index"]
+      "@unveiler.io/react-native-client": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
