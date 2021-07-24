@@ -51,7 +51,7 @@ API documentation can be found [here](https://docs.unveiler.io/docs/react-native
 
 ## Example
 
-See an example on how to use this module in [`examples`](//github.com/ClaimR/react-native-client/tree/master/example).
+See an example on how to use this module in [`examples`](//github.com/unveiler-io/react-native-client/tree/master/example).
 
 To run it, first create a `.env` file in the `example` folder where you add your ClaimR API Key. You can get a key at https://dashboard.unveiler.io.
 
