@@ -1,5 +1,5 @@
-query VerifyLocation($claim: ClaimInput!, $context: ContextInput!) {
-  verifyLocation(tokenRequest: { claim: $claim }, context: $context) {
+query VerifyLocation($claim: ClaimInput!, $context: ContextInput!, $logRequestDetails: Boolean) {
+  verifyLocation(tokenRequest: { claim: $claim }, context: $context, logRequestDetails: $logRequestDetails) {
     status
     message
     tokenResponse {

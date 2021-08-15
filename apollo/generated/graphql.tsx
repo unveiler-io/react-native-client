@@ -187,6 +187,7 @@ export type VerifiedLocationResponse = {
 export type VerifyLocationQueryVariables = Exact<{
   claim: ClaimInput
   context: ContextInput
+  logRequestDetails?: Maybe<Scalars['Boolean']>
 }>
 
 export type VerifyLocationQuery = {
@@ -214,8 +215,12 @@ export type VerifyLocationQuery = {
 }
 
 export const VerifyLocationDocument = gql`
-  query VerifyLocation($claim: ClaimInput!, $context: ContextInput!) {
-    verifyLocation(tokenRequest: { claim: $claim }, context: $context) {
+  query VerifyLocation($claim: ClaimInput!, $context: ContextInput!, $logRequestDetails: Boolean) {
+    verifyLocation(
+      tokenRequest: { claim: $claim }
+      context: $context
+      logRequestDetails: $logRequestDetails
+    ) {
       status
       message
       tokenResponse {
@@ -250,6 +255,7 @@ export const VerifyLocationDocument = gql`
  *   variables: {
  *      claim: // value for 'claim'
  *      context: // value for 'context'
+ *      logRequestDetails: // value for 'logRequestDetails'
  *   },
  * });
  */

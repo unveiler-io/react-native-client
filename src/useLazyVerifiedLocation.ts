@@ -54,6 +54,15 @@ type LazyVerifiedLocationOptions = {
    */
   minEpochs?: number
   maxEpochs?: number
+  /**
+   * Whether the Unveiler API should retain details from the location verification attempts.
+   * Can be useful for purposes where you want to get insight into why requests are failing
+   * or from where requests are being made.
+   *
+   * Make sure that recording and retaining detailed user data is covered in your Terms of
+   * Service and Privacy Policy, and that the end-user has accepted these.
+   */
+  logRequestDetails?: boolean
 }
 
 export const useLazyVerifiedLocation = ({
@@ -61,6 +70,7 @@ export const useLazyVerifiedLocation = ({
   claim,
   minEpochs,
   maxEpochs,
+  logRequestDetails,
 }: LazyVerifiedLocationOptions): {
   state: States
   claim?: PointClaim
@@ -116,6 +126,7 @@ export const useLazyVerifiedLocation = ({
           variables: {
             claim: claimData,
             context: { gnssLog: RawMeasurementsHeader + rawMeasurements },
+            logRequestDetails,
           },
         })
       },
