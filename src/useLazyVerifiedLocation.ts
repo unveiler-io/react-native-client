@@ -1,60 +1,12 @@
-import { gql, useLazyQuery } from '@apollo/client'
-
 import { useMachine } from '@xstate/react'
+import { Point, useVerifyLocationLazyQuery, VerifyLocationQueryVariables } from 'apollo/generated/graphql'
 import { Machine } from 'xstate'
 
 import type { UnveilerClient } from './UnveilerClient'
 import { RawMeasurementsHeader } from './useRawGnssMeasurements'
 import { useVerifiedLocation } from './VerifiedLocationProvider'
 
-const GET_VERIFIED_LOCATION = gql`
-  query VerifyLocation($claim: ClaimInput!, $context: ContextInput!) {
-    verifyLocation(tokenRequest: { claim: $claim }, context: $context) {
-      status
-      message
-      tokenResponse {
-        token {
-          claim {
-            point {
-              location {
-                latitude
-                longitude
-              }
-              radius
-            }
-          }
-        }
-        jwt
-      }
-    }
-  }
-`
-
-type VerifiedLocationResponse = {
-  verifyLocation: {
-    status: 'GRANTED' | 'REVOKED' | 'ERROR'
-    message?: string
-    tokenResponse?: TokenResponse
-  }
-}
-
-type TokenResponse = {
-  token: {
-    iat: number
-    claim: {
-      point?: PointClaim
-    }
-  }
-  jwt: string
-}
-
-export type PointClaim = {
-  location: {
-    latitude: number
-    longitude: number
-  }
-  radius: number
-}
+export type PointClaim = Point
 
 const verifiedLocationMachineConfiguration = {
   id: 'verifiedLocation',
@@ -126,37 +78,43 @@ export const useLazyVerifiedLocation = ({
   const { ready, isListening, rawMeasurements, location, progress } = RawGnssMeasurements
 
   // Prepare the query against the ClaimR API
-  const [getVerifiedLocation, { data, error }] = useLazyQuery<VerifiedLocationResponse>(
-    GET_VERIFIED_LOCATION,
-    {
-      client: client.apolloClient,
-      onCompleted: ({ verifyLocation }) => {
-        console.log('completed')
-        const { status } = verifyLocation
-        if (status === 'GRANTED') {
-          send('GRANTED')
-        } else if (status === 'REVOKED') {
-          send('REVOKED')
-        } else {
-          send('FAILED')
-        }
-      },
-      onError: (err) => {
-        console.error(err)
+  const [getVerifiedLocation, { data, error }] = useVerifyLocationLazyQuery({
+    client: client.apolloClient,
+    onCompleted: ({ verifyLocation }) => {
+      console.log('completed')
+      const { status } = verifyLocation
+      if (status === 'GRANTED') {
+        send('GRANTED')
+      } else if (status === 'REVOKED') {
+        send('REVOKED')
+      } else {
         send('FAILED')
-      },
-      errorPolicy: 'all',
-    }
-  )
+      }
+    },
+    onError: (err) => {
+      console.error(err)
+      send('FAILED')
+    },
+    errorPolicy: 'all',
+  })
 
   // Track the state in a finite state machine
   const [state, send] = useMachine(verifiedLocationMachine, {
     actions: {
       submit: () => {
+        let claimData: VerifyLocationQueryVariables['claim'] | undefined
+        if (claim !== undefined) {
+          claimData = claim
+        } else if (location !== undefined) {
+          claimData = { point: { location, radius: 100 } }
+        } else {
+          throw new Error('Tried submitting without claim being supplied nor location being available')
+        }
+
         console.debug('Submitting')
         getVerifiedLocation({
           variables: {
-            claim: claim ?? { point: { location, radius: 100 } },
+            claim: claimData,
             context: { gnssLog: RawMeasurementsHeader + rawMeasurements },
           },
         })
@@ -175,11 +133,16 @@ export const useLazyVerifiedLocation = ({
 
   // Define the submit callback
   const canSubmit =
-    state.matches('ready') || state.matches('success') || state.matches('failed') || state.matches('revoked')
+    (state.matches('ready') ||
+      state.matches('success') ||
+      state.matches('failed') ||
+      state.matches('revoked')) &&
+    (claim || location)
   const submit = canSubmit ? () => send('SUBMIT') : undefined
 
+  const returnedClaim = data?.verifyLocation?.tokenResponse?.token?.claim?.point
   return {
-    claim: data?.verifyLocation?.tokenResponse?.token.claim.point,
+    claim: returnedClaim === null ? undefined : returnedClaim, // Replace null with undefined
     jwt: data?.verifyLocation?.tokenResponse?.jwt,
     message: data?.verifyLocation?.message ?? error?.message,
     submit,

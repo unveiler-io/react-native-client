@@ -1,0 +1,20 @@
+query VerifyLocation($claim: ClaimInput!, $context: ContextInput!) {
+  verifyLocation(tokenRequest: { claim: $claim }, context: $context) {
+    status
+    message
+    tokenResponse {
+      token {
+        claim {
+          point {
+            location {
+              latitude
+              longitude
+            }
+            radius
+          }
+        }
+      }
+      jwt
+    }
+  }
+}

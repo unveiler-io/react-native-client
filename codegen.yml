@@ -1,5 +1,5 @@
 overwrite: true
-schema: src/pages/api/graphql/schema.graphql
+schema: https://api.unveiler.io
 documents: "apollo/**/*.graphql"
 generates:
   apollo/generated/graphql.tsx:

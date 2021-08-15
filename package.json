@@ -11,6 +11,7 @@
     "src",
     "lib",
     "android",
+    "apollo/generated/",
     "claimr-react-native-client.podspec",
     "!lib/typescript/example",
     "!**/__tests__",
@@ -132,7 +133,8 @@
   },
   "eslintIgnore": [
     "node_modules/",
-    "lib/"
+    "lib/",
+    "apollo/generated/"
   ],
   "prettier": {
     "semi": false,
