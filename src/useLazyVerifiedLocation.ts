@@ -1,5 +1,5 @@
 import { useMachine } from '@xstate/react'
-import { Point, useVerifyLocationLazyQuery, VerifyLocationQueryVariables } from 'apollo/generated/graphql'
+import { Point, useVerifyLocationLazyQuery, VerifyLocationQueryVariables } from './generated/graphql'
 import { Machine } from 'xstate'
 
 import type { UnveilerClient } from './UnveilerClient'

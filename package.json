@@ -11,8 +11,7 @@
     "src",
     "lib",
     "android",
-    "apollo/generated/",
-    "claimr-react-native-client.podspec",
+    "unveiler-react-native-client.podspec",
     "!lib/typescript/example",
     "!**/__tests__",
     "!**/__fixtures__",
@@ -134,7 +133,7 @@
   "eslintIgnore": [
     "node_modules/",
     "lib/",
-    "apollo/generated/"
+    "src/generated/graphql.tsx"
   ],
   "prettier": {
     "semi": false,

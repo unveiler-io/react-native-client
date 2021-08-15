@@ -2,7 +2,7 @@ overwrite: true
 schema: https://api.unveiler.io
 documents: "apollo/**/*.graphql"
 generates:
-  apollo/generated/graphql.tsx:
+  src/generated/graphql.tsx:
     plugins:
       - "typescript"
       - "typescript-operations"
