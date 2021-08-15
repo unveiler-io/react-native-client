@@ -1,0 +1,12 @@
+overwrite: true
+schema: src/pages/api/graphql/schema.graphql
+documents: "apollo/**/*.graphql"
+generates:
+  apollo/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+hooks:
+  afterOneFileWrite:
+    - prettier --write
