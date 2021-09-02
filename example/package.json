@@ -10,8 +10,8 @@
     "build:release": "react-native bundle --platform android --dev false --entry-file index.ts --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && rm -rf android/app/src/main/res/drawable-* && rm -rf android/app/src/main/res/raw/* && cd android && ./gradlew assembleRelease && cd .."
   },
   "dependencies": {
-    "react": "16.11.0",
-    "react-native": "0.62.3",
+    "react": "17.0.2",
+    "react-native": "0.65.1",
     "react-native-config": "^1.4.3"
   },
   "devDependencies": {
