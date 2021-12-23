@@ -19,6 +19,6 @@
     "@babel/runtime": "^7.9.6",
     "babel-plugin-module-resolver": "^4.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
-    "ts-essentials": "^7.0.3"
+    "ts-essentials": "^9.1.0"
   }
 }
